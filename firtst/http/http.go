@@ -72,11 +72,14 @@ func (a *Handler)Get(ctx fiber.Ctx) error {
 	ctx.JSON(responseData)
 	ctx.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
 
-
 	return ctx.SendStatus(fiber.StatusOK)
 }
 
-func Reponser(ctx context.Context,concumer *kafka.Reader, keyChanelMap map[uint64]chan []byte) {
+func Reponser(
+	ctx context.Context,
+	concumer *kafka.Reader,
+	keyChanelMap map[uint64]chan []byte,
+) {
 	for {
 		message, err := concumer.ReadMessage(ctx)
 		if err != nil {

@@ -22,10 +22,18 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer func() {
+		if err := producer.Close(); err != nil {
+			log.Fatal("failed to close writer:", err)
+		}	
+	} ()
 
 	keyChanelMap := make(map[uint64]chan []byte)
 
-	go http.Reponser(context.Background(), concumer, keyChanelMap)
+	ctx, cancel :=context.WithCancel(context.Background())
+	defer cancel()
+	
+	go http.Reponser(ctx, concumer, keyChanelMap)
 
 	router := fiber.New()
 	http.NewAuthRouting(router, http.NewHandler(producer, keyChanelMap))
