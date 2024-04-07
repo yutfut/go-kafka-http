@@ -44,8 +44,6 @@ func main() {
 			fmt.Println(err)
 		}
 
-		fmt.Println(request)
-
 		response := &Pong{
 			Ping: request.Ping,
 			Pong: request.Ping,
@@ -55,8 +53,6 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		}
-
-		fmt.Println(jsonResponse)
 
 		if _, err = producer.WriteMessages(kafka.Message{Key: message.Key, Value: jsonResponse}); err != nil {
 			log.Fatal("failed to write messages:", err)

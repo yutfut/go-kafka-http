@@ -30,7 +30,7 @@ func main() {
 
 	keyChanelMap := make(map[uint64]chan []byte)
 
-	ctx, cancel :=context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	
 	go http.Reponser(ctx, concumer, keyChanelMap)

@@ -3,6 +3,7 @@ package http
 import (
 	"context"
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 	"log"
 	"sync"
@@ -67,9 +68,12 @@ func (a *Handler)Get(ctx fiber.Ctx) error {
 
 	responseData := <- outputChanel
 
-	close(outputChanel)
+	response := &Pong{}
+	if err := json.Unmarshal(responseData, response); err != nil {
+		fmt.Println(err)
+	}
 
-	ctx.JSON(responseData)
+	ctx.JSON(response)
 	ctx.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
 
 	return ctx.SendStatus(fiber.StatusOK)
