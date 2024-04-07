@@ -17,12 +17,12 @@ func KafkaConn(config *conf.Conf) (*kafka.Conn, *kafka.Reader, error) {
 		return nil, nil, err
 	}
 
-	concumer := kafka.NewReader(kafka.ReaderConfig{
+	consumer := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:   []string{address},
 		GroupID:   "consumer-group-id",
 		Topic:     "output",
 		MaxBytes:  10e6, // 10MB
 	})
 
-	return producer, concumer, nil
+	return producer, consumer, nil
 }

@@ -25,7 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	concumer := kafka.NewReader(kafka.ReaderConfig{
+	consumer := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:   []string{"localhost:9092"},
 		GroupID:   "consumer-group-id",
 		Topic:     "input",
@@ -33,7 +33,7 @@ func main() {
 	})
 
 	for {
-		message, err := concumer.ReadMessage(ctx)
+		message, err := consumer.ReadMessage(ctx)
 		if err != nil {
 			fmt.Println(err)
 			break
@@ -59,7 +59,7 @@ func main() {
 		}
 	}
 
-	if err := concumer.Close(); err != nil {
+	if err := consumer.Close(); err != nil {
 		log.Fatal("failed to close reader:", err)
 	}
 }
